@@ -6,5 +6,30 @@
   </head>
   <body>
     <h1>Welcome to IronTumblr</h1>
+    <div>
+      <% posts.forEach(post => { %>
+        <%= post.content %>
+        <%= post.creatorId %>
+        <img src="<%= post.picPath %>">
+        <%= post.picName %>
+        <% if(post.comments) {
+          post.comments.forEach(comment => { %>
+            <div><%= comment.content %> </div>
+            <% if(comment.imagePath) { %>
+              <img src="<%= comment.imagePath %>" width="20%">
+           <% }
+          })
+        } %>
+        <form action="/comment/<%= post._id %>" method="post" enctype="multipart/form-data">
+          <label>Leave a Comment: </label>
+          <input type="textarea" name="comment">
+          <label>Image Name: </label>
+          <input type="text" name="imgName">
+          <label>Upload Photo: </label>
+          <input type="file" name="photo">
+          <button>Submit Comment</button>
+        </form>
+      <% }) %>
+    </div>
   </body>
 </html>

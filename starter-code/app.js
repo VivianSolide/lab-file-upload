@@ -13,6 +13,7 @@ const session            = require('express-session');
 const MongoStore         = require('connect-mongo')(session);
 const mongoose           = require('mongoose');
 const flash              = require('connect-flash');
+const Post               = require('./models/post');
 
 mongoose.connect('mongodb://localhost:27017/tumblr-lab-development');
 
@@ -80,7 +81,8 @@ passport.use('local-signup', new LocalStrategy(
                 const newUser = new User({
                   username,
                   email,
-                  password: hashPass
+                  password: hashPass,
+                  img: `/uploads/${req.file.filename}`
                 });
 
                 newUser.save((err) => {
